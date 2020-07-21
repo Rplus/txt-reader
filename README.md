@@ -1,4 +1,19 @@
-## options:
+## USAGE:
+
+1. fill text in html div tasg: `id="c1"`
+2. drag html file into browser.
+3. change color by modifying url query string, see options below.
+
+## CONTROL:
+
+* `←`, `→`  
+  prev page, next page
+* `Page Down`, `Space`  
+  scroll down, and it will go to next page when press agian at footer
+* `Esc`  
+  show sidebar with all links of page
+
+## OPTIONS:
 
 ### by JS
 
