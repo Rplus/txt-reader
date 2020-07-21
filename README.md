@@ -23,4 +23,5 @@ var strs = [
 * `fz`: css font-size
 * `bgc`: css background color
 
-* `ln`: set how many line(s) per pages
+* `ln`: set how many line(s) per pages  
+  default: 20 lines per page
