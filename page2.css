@@ -1,0 +1,102 @@
+body {
+  font-size: var(--fz, 2.5em);
+  background: var(--bgc, #000);
+  padding: 0 1em;
+  overflow-x: hidden;
+  color: var(--color, #eee);
+}
+
+ ::-webkit-scrollbar {
+  width: 3px;
+}
+
+ ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+ ::-webkit-scrollbar-thumb {
+  /*background: rgba(0, 0, 0, 0.5);*/
+  background: rgba(255, 255, 255, 0.15);
+}
+#c1 {
+  display: none;
+}
+#c2 {
+  white-space: pre-wrap;
+  max-width: 100rem;
+  margin: auto;
+}
+
+#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 8em;
+  max-width: 50vw;
+  background-color: #111c;
+  font-size: 1rem;
+  display: none;
+  flex-direction: column;
+}
+.nav-btn {
+  text-align: center;
+}
+#navul {
+  margin: 0;
+  overflow: auto;
+}
+#nav a {
+  color: inherit;
+  text-decoration: none;
+}
+#nav a:hover {
+  text-decoration: underline;
+}
+#nav a:visited {
+  color: #aaf;
+}
+#nav a:target {
+  outline: 1px solid #fff;
+}
+#navctrl {
+  display: none;
+}
+.navctrl-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: .5em;
+  background-color: #fff1;
+  z-index: 1;
+}
+.navctrl-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+#navctrl:checked ~ #nav,
+#navctrl:checked ~ .navctrl-overlay {
+  display: flex;
+}
+rt {
+  opacity: .5;
+}
+
+.configs {
+  text-align: center;
+}
+.configs input[type=number] {
+  width: 80%;
+  text-align: center;
+  font-size: var(--fz, 2.5em);
+  background: var(--bgc, #000);
+  color: var(--color, #eee);
+}
