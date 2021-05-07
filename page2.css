@@ -1,5 +1,5 @@
 body {
-  font-size: var(--fz, 2.5em);
+  font-size: var(--fz, 3em);
   background: var(--bgc, #000);
   padding: 0 1em;
   overflow-x: hidden;
