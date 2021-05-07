@@ -79,6 +79,13 @@ function initKeyEvent(argument) {
         updateHash(p);
         break;
 
+      case 'ArrowUp':
+      case 'ArrowDown':
+        if (e.altKey) {
+          updateLightness(e.key === 'ArrowUp');
+          return;
+        }
+
       default:
         scrollY = -1;
         break;
@@ -158,6 +165,47 @@ function initCtrl() {
   c1.remove();
 }
 
+function updateLightness(up) {
+  let colorHsl = rgb2hslObj(getRgbColor(c2));
+  colorHsl.l = Math.max(0, colorHsl.l - 0.05 * (up ? -1 : 1));
+  document.body.style.setProperty(`--color`, `hsl(${colorHsl.h}, ${colorHsl.s*100}%, ${colorHsl.l*100}%)`);
+}
+
 function rgb2hex(rgb) {
   return `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`;
+}
+
+function rgb2hslObj(rgb) {
+  let [r, g, b] = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(i => i / 255);
+
+  let max = Math.max(r, g, b);
+  let min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max == min) {
+    h = s = 0; // achromatic
+  } else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+
+    h /= 6;
+  }
+
+  // return `hsl(${h}, ${s}%, ${l}%)`;
+  return {h, s, l};
+}
+
+function getRgbColor(node) {
+  return window.getComputedStyle(node).color;
+}
+
+function hsl2rgb(hslObj) {
+  document.head.style.color = `hsl(${h}, ${s * 100}%, ${l * 100}%)`;
+  return getRgbColor(document.head);
 }
