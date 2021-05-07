@@ -2,7 +2,6 @@ let p;
 let br = [];
 let ln;
 let str;
-let strs;
 
 function updateHash(p) {
   location.hash = `#p${p}`;
@@ -18,7 +17,7 @@ function goNext() {
 function insetText(p = 0) {
   if (p < 0) { return; }
   let txt = str.slice(br[p * ln], br[(p + 1) * ln]) + `\n\n<hr>#p${p}`;
-  if (strs) {
+  if (window.strs) {
     for (let s in strs) {
       txt = txt.replace(strs[s][0], strs[s][1]);
     }
