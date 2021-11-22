@@ -102,11 +102,20 @@ function initKeyEvent(argument) {
 }
 
 window.onload = () => {
+  initDom();
   initTxt();
   initConfig();
   initCtrl();
   initKeyEvent();
 };
+
+function initDom() {
+  let c2 = document.getElementById('c2');
+  let c1 = document.getElementById('c1');
+  if (!c2 && c1) {
+    c1.insertAdjacentHTML('beforebegin', `<div id="c2"></div>`);
+  }
+}
 
 function initConfig() {
   let qs = location.search ? new URLSearchParams(location.search) : null;
