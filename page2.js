@@ -86,6 +86,14 @@ function initKeyEvent(argument) {
           return;
         }
 
+      case '=':
+      case '-':
+        if (e.altKey) {
+          updateFontSize(e.key === '=')
+          return;
+        }
+        break;
+
       default:
         scrollY = -1;
         break;
@@ -169,6 +177,13 @@ function updateLightness(up) {
   let colorHsl = rgb2hslObj(getRgbColor(c2));
   colorHsl.l = Math.max(0, colorHsl.l - 0.05 * (up ? -1 : 1));
   document.body.style.setProperty(`--color`, `hsl(${colorHsl.h}, ${colorHsl.s*100}%, ${colorHsl.l*100}%)`);
+}
+
+
+function updateFontSize(up) {
+  let fz = +getComputedStyle(document.body).getPropertyValue('--fz');
+  fz += (up ? 1 : -1);
+  document.body.style.setProperty(`--fz`, fz);
 }
 
 function rgb2hex(rgb) {
