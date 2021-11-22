@@ -23,7 +23,8 @@ body {
 }
 #c2 {
   white-space: pre-wrap;
-  max-width: 100rem;
+  /* max-width: 100rem; */
+  max-width: 35em;
   margin: auto;
 }
 
