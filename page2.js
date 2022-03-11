@@ -16,7 +16,9 @@ function goNext() {
 
 function insetText(p = 0) {
   if (p < 0) { return; }
-  let txt = str.slice(br[p * ln], br[(p + 1) * ln]) + `\n\n<hr>#p${p}`;
+  // let txt = str.slice(br[p * ln], br[(p + 1) * ln]) + `\n\n<hr>#p${p}`;
+  document.body.style.setProperty(`--page`, p);
+  let txt = str.slice(br[p * ln], br[(p + 1) * ln]);
   if (window.strs) {
     for (let s in strs) {
       txt = txt.replace(strs[s][0], strs[s][1]);
@@ -120,7 +122,7 @@ function initDom() {
 function initConfig() {
   let qs = location.search ? new URLSearchParams(location.search) : null;
 
-  ln = +(qs && qs.get('ln') || 200);
+  ln = +(qs && qs.get('ln') || window.config?.ln || 200);
   p = getPage(location.hash);
 
   if (qs) {
@@ -135,9 +137,15 @@ function initConfig() {
 
 function initTxt() {
   str = c1.textContent;
-  for(let i = 0; i < str.length; i++) {
-    if (str[i] === '\n') br.push(i);
+  if (!window.config?.spliter) {
+    for(let i = 0; i < str.length; i++) {
+      if (str[i] === '\n') br.push(i);
+    }
+  } else {
+    br = Array.from(str.matchAll(config.spliter), x => x.index);
+    br.unshift(0);
   }
+  console.log(111, br);
 }
 
 function initCtrl() {
@@ -190,7 +198,7 @@ function updateLightness(up) {
 
 
 function updateFontSize(up) {
-  let fz = +getComputedStyle(document.body).getPropertyValue('--fz');
+  let fz = +getComputedStyle(document.body).getPropertyValue('--fz') || parseInt(window.getComputedStyle(c2).fontSize);
   fz += (up ? 1 : -1);
   document.body.style.setProperty(`--fz`, fz);
 }
