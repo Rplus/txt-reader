@@ -7,6 +7,7 @@ let str;
 let title = decodeURIComponent(location.pathname).match(/([^/]*)\.html/)?.[1] || '';
 
 function updateHash(p) {
+  if (p < 0 || p >= br.length ) { return; }
   location.hash = `#p${p}`;
 }
 
@@ -17,8 +18,8 @@ function goNext() {
   updateHash(p + 1);
 }
 
-function insetText(p = 0) {
-  if (p < 0) { return; }
+function insertText(p = 0) {
+  if (p < 0 || p >= br.length ) { return; }
   // let txt = str.slice(br[p * ln], br[(p + 1) * ln]) + `\n\n<hr>#p${p}`;
   document.body.style.setProperty(`--page`, p);
   let txt = str.slice(br[p * ln], br[(p + 1) * ln]);
@@ -43,7 +44,7 @@ function initKeyEvent(argument) {
   window.addEventListener('hashchange', () => {
     console.log('_hashchange_');
     p = getPage(location.hash);
-    insetText(p);
+    insertText(p);
   });
 
   let scrollY = -1;
@@ -138,7 +139,7 @@ function initConfig() {
       }
     });
   }
-  insetText(p);
+  insertText(p);
 }
 
 function initTxt() {
@@ -151,7 +152,7 @@ function initTxt() {
     br = Array.from(str.matchAll(config.spliter), x => x.index);
     br.unshift(0);
   }
-  console.log(111, br);
+  // console.log(111, br);
 }
 
 function initCtrl() {
@@ -190,8 +191,9 @@ function initCtrl() {
     document.body.style.setProperty(`--fz`, e.target.value);
   }
 
-  navul.innerHTML = new Array(Math.ceil(br.length / ln))
-    .fill(1).map((i, idx) => `<li><a id="p${idx}" href="#p${idx}">p${idx}</a></li>`).join('');
+  var pageSum = Math.ceil(br.length / ln);
+  navul.innerHTML = new Array(pageSum)
+    .fill(1).map((i, idx) => `<li><a id="p${idx}" href="#p${idx}" data-p="${~~(100 * idx / pageSum)}">p${idx}</a></li>`).join('');
 
   c1.remove();
 }
