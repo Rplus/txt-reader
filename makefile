@@ -4,7 +4,11 @@ inEncode = gbk
 outEncode = utf8
 
 # all: tongwenWay
-all: openccWay
+all: openccWay cat
+
+cat:
+	cat 'head.html' ${out} > ${out}.html;
+	rm ${out};
 
 tongwenWay: toUTF8 tongwen replaceSpace
 
