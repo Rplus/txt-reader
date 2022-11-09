@@ -3,6 +3,9 @@ let br = [];
 let ln;
 let str;
 
+
+let title = decodeURIComponent(location.pathname).match(/([^/]*)\.html/)?.[1] || '';
+
 function updateHash(p) {
   location.hash = `#p${p}`;
 }
@@ -25,6 +28,9 @@ function insetText(p = 0) {
     }
   }
   c2.innerHTML = txt;
+  let setctionTitle = txt.match(/^.+/m)?.[0];
+  document.title = title + ' :: ' + setctionTitle;
+  document.body.style.setProperty(`--len`, txt.length);
   window.scrollTo(0, 0);
   // location.hash = `#${p}`;
 }
