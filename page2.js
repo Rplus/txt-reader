@@ -47,11 +47,11 @@ function initKeyEvent(argument) {
     insertText(p);
   });
 
-  let scrollY = -1;
   document.documentElement.addEventListener('keydown', (e) => {
     console.log(e.key);
     switch (e.key) {
       case 'Escape':
+      case '/':
         navctrl.checked = !navctrl.checked;
         if (document.querySelector(location.hash)) {
           document.querySelector(location.hash).scrollIntoView();
@@ -72,15 +72,19 @@ function initKeyEvent(argument) {
         updateHash(p);
         break;
 
+      case '+':
+        if (check_to_next_page()) {
+          e.preventDefault();
+        }
+        document.body.scrollTop += window.innerHeight - 60;
+        break;
+
       case 'Space':
       case ' ':
       case 'PageDown':
-        if (scrollY === window.scrollY && window.scrollY !== 0) {
-          p++;
-          updateHash(p);
+        if (check_to_next_page()) {
           e.preventDefault();
         }
-        scrollY = window.scrollY;
         break;
 
       case 'ArrowRight':
@@ -104,10 +108,19 @@ function initKeyEvent(argument) {
         break;
 
       default:
-        scrollY = -1;
         break;
     }
   })
+}
+
+function check_to_next_page() {
+  // calc scroll offset to nav to next page
+  if (window.innerHeight + document.body.scrollTop > document.body.offsetHeight - 10) {
+    p++;
+    updateHash(p);
+    return true;
+  }
+  return false;
 }
 
 window.onload = () => {
