@@ -29,9 +29,14 @@ body:active {
 #c2 {
   white-space: pre-wrap;
   /* max-width: 100rem; */
-  max-width: 35em;
+  /* max-width: 35em; */
   margin: auto;
   counter-reset: page var(--page) len var(--len);
+  line-height: 1.4;
+}
+
+#c2::first-line {
+	/* text-decoration: underline; */
 }
 
 #c2::after {
