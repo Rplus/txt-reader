@@ -48,7 +48,11 @@ function initKeyEvent(argument) {
   });
 
   document.documentElement.addEventListener('keydown', (e) => {
-    console.log(e.key);
+    console.log(e.key, e.code);
+    if (e.code === 'NumpadMultiply' || e.code === 'NumpadSubtract') {
+      updateLightness(e.code === 'NumpadMultiply');
+    }
+
     switch (e.key) {
       case 'Escape':
       case '/':
@@ -76,7 +80,7 @@ function initKeyEvent(argument) {
         if (check_to_next_page()) {
           e.preventDefault();
         }
-        document.body.scrollTop += window.innerHeight - 60;
+        document.body.scrollTop += window.innerHeight * 0.875;
         break;
 
       case 'Space':
@@ -213,7 +217,7 @@ function initCtrl() {
 
 function updateLightness(up) {
   let colorHsl = rgb2hslObj(getRgbColor(c2));
-  colorHsl.l = Math.max(0, colorHsl.l - 0.05 * (up ? -1 : 1));
+  colorHsl.l = Math.max(Math.max(0, colorHsl.l - 0.05 * (up ? -1 : 1)), 0.05);
   document.body.style.setProperty(`--color`, `hsl(${colorHsl.h}, ${colorHsl.s*100}%, ${colorHsl.l*100}%)`);
 }
 
